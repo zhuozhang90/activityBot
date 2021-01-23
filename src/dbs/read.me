@@ -1,0 +1,47 @@
+#######################
+# CS622 HW4 databases #
+# Zhuo Zhang          # 
+# zzhang90@bu.edu     #
+#######################
+
+## environment
+
+* using openjdk-11 on windows 10 under Eclipse IDE.
+
+* package name: edu.bu.cs622.hw4.
+
+* source file directory: src/edu/bu/cs622/hw4.
+
+## implementation
+
+implemented in both mysql and mongodb.
+
+data files are first parsed as json, then stored into each database. each db uses the respective java connection driver to query for results.
+
+to store data into each db, the json files were parsed such that each line would form one object of one of the entry classes, which stores data in an array list to pass into both databases, in order to avoid repeated parsing for same data.
+
+to handle user input, two packages were used: prettytime-nlp for parsing natural language time so that user doesn't have to use one specific date format, and corenlp for some simple natural langauge processing to get what the user is asking about. 
+
+## how to use
+
+see the attached pom.xml file for dependencies to install with maven. 
+
+Run.java is the entry point of the whole project. once start the user will be prompted with "What do you want to ask me about?" 
+
+then the user can use natural sentences to ask questions about the heart rate notification count, the total steps of a certain day as well as running data for a certain day. the questions must include a date in any format and the keywords to indicate what to ask about. 
+
+sample questions are: 
+did i run feb 7 2016
+how many steps did i walk on june 6 2016
+how many heart rate notifications did i receive on 2016-06-07
+
+or even:
+how many steps did i have three years ago today
+
+## known issue
+
+prettytime-nlp has some issues where for certain formats it won't be able to understand the time (especially with ambiguous date formats) and defaults to the current datetime.
+
+some lines in the input file has issues with parsing as json and couldn't be imported. i had to do some preprocessing and deleted some empty lines and lines that the json library just wouldn't handle for some reason. so the edited input files are also included
+
+some files have issues with timestamp, e.g. in activity.txt all timestamps for the same day are exactly the same, which makes it hard to to calculate certain results accurately.
